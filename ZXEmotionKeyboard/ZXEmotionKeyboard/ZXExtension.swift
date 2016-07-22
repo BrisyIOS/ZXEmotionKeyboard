@@ -12,14 +12,14 @@ import Foundation
 // 字符串的延展，主要是扩充一些与表情有关的接口
 extension NSString {
     
-    class func EmojiCodeToSymbol(c : NSInteger?) -> NSInteger? {
+    class func EmojiCodeToSymbol(c : Int64?) -> Int64? {
         
         
         return ((((0x808080F0 | (c! & 0x3F000) >> 4) | (c! & 0xFC0) << 10) | (c! & 0x1C0000) << 18) | (c! & 0x3F) << 24);
         
     }
     
-    class func emojiWithIntCode(code : NSInteger?) -> String? {
+    class func emojiWithIntCode(code : Int64?) -> String? {
         
         var symbol = EmojiCodeToSymbol(code!);
         var string = NSString.init(bytes: &symbol, length: sizeof(NSInteger), encoding: NSUTF8StringEncoding);
@@ -34,7 +34,7 @@ extension NSString {
     class func emojiWithStringCode(stringCode : String?) -> String? {
         
         let stringCode = stringCode?.cStringUsingEncoding(NSUTF8StringEncoding);
-        let code = strtol(stringCode!, nil , 16);
+        let code = strtoll(stringCode!, nil , 16);
         
         return emojiWithIntCode(code);
     }
